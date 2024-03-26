@@ -4,6 +4,10 @@ type AnalyticsArgs = {
 	retention?: number;
 };
 
+type TrackOption = {
+	persist?: boolean;
+};
+
 export class Analytics {
 	private retention: number = 60 * 60 * 24 * 7;
 
@@ -11,8 +15,11 @@ export class Analytics {
 		if (opts?.retention) this.retention = opts.retention;
 	}
 
-	async track(nameSpace: string, event: {}) {
-		const key = `analytics::${nameSpace}`;
+	async track(nameSpace: string, event: object = {}, opts?: TrackOption) {
+		let key = `analytics::${nameSpace}`;
+		if (!opts?.persist) {
+			key += `::${getDate()}`;
+		}
 
 		// DB call to persist this event
 		await redis.hincrby(key, JSON.stringify(event), 1);
