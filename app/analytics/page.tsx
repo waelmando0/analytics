@@ -6,11 +6,9 @@ const page = async () => {
 	// const pageView = await analytics.retrieveDays('pageview', 2);
 
 	return (
-		<section className='min-h-screen w-full flex items-center justify-center py-4 px-6'>
-			<div className='relative w-full max-w-6xl mx-auto'>
-				<AnalyticsDashboard />
-			</div>
-		</section>
+		<div className='flex items-center justify-center mt-48'>
+			<AnalyticsDashboard />
+		</div>
 	);
 };
 

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from '@/providers/theme-provider';
 import '../styles/globals.css';
+import Navbar from '@/components/navbar/navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,9 +17,16 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className={`${inter.className} dark bg-[#020817] text-white`}>
-				{children}
+		<html lang='en' suppressHydrationWarning>
+			<body className={`${inter.className} dark:bg-slate-800/90 `}>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='dark'
+					enableSystem={false}
+				>
+					<Navbar />
+					<main className='relative flex  flex-col'>{children}</main>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
